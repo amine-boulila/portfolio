@@ -104,7 +104,7 @@ function Home() {
     (typeof experiences)[number] | null
   >(null);
   const [activeMapNode, setActiveMapNode] = useState<string | null>(null);
-    const [formState, handleFormSubmit] = useFormspree("xppwwzqn");
+  const [formState, handleFormSubmit] = useFormspree("xppwwzqn");
   const cursorDotRef = useRef<HTMLSpanElement>(null);
   const cursorRingRef = useRef<HTMLSpanElement>(null);
   const filteredProjects = useMemo(
@@ -770,7 +770,11 @@ function Home() {
                       className="rounded-md border border-input bg-background px-3.5 py-3 text-sm outline-none transition placeholder:text-muted-foreground/60 focus:border-primary focus:ring-2 focus:ring-primary/15"
                       data-testid="input-contact-name"
                     />
-                    <ValidationError prefix="Name" field="name" errors={formState.errors} />
+                    <ValidationError
+                      prefix="Name"
+                      field="name"
+                      errors={formState.errors}
+                    />
                   </label>
                   <label className="grid gap-2">
                     <span className="font-mono text-[10px] uppercase tracking-[.12em] text-muted-foreground">
@@ -784,7 +788,11 @@ function Home() {
                       className="rounded-md border border-input bg-background px-3.5 py-3 text-sm outline-none transition placeholder:text-muted-foreground/60 focus:border-primary focus:ring-2 focus:ring-primary/15"
                       data-testid="input-contact-email"
                     />
-                    <ValidationError prefix="Email" field="email" errors={formState.errors} />
+                    <ValidationError
+                      prefix="Email"
+                      field="email"
+                      errors={formState.errors}
+                    />
                   </label>
                   <label className="grid gap-2">
                     <span className="font-mono text-[10px] uppercase tracking-[.12em] text-muted-foreground">
@@ -798,7 +806,11 @@ function Home() {
                       className="resize-none rounded-md border border-input bg-background px-3.5 py-3 text-sm outline-none transition placeholder:text-muted-foreground/60 focus:border-primary focus:ring-2 focus:ring-primary/15"
                       data-testid="input-contact-message"
                     />
-                    <ValidationError prefix="Message" field="message" errors={formState.errors} />
+                    <ValidationError
+                      prefix="Message"
+                      field="message"
+                      errors={formState.errors}
+                    />
                   </label>
                   <button
                     type="submit"
@@ -806,10 +818,14 @@ function Home() {
                     className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-3.5 text-sm font-semibold text-primary-foreground transition hover:-translate-y-0.5 hover:shadow-[0_8px_22px_hsl(var(--primary)/.18)]"
                     data-testid="button-contact-submit"
                   >
-                    {formState.submitting ? "Sending..." : "Send message"} <ArrowUpRight size={16} />
+                    {formState.submitting ? "Sending..." : "Send message"}{" "}
+                    <ArrowUpRight size={16} />
                   </button>
                   {formState.succeeded && (
-                    <p role="status" className="font-mono text-[10px] leading-5 text-primary">
+                    <p
+                      role="status"
+                      className="font-mono text-[10px] leading-5 text-primary"
+                    >
                       Thanks — your message has been sent successfully.
                     </p>
                   )}
