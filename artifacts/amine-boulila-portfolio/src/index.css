@@ -84,6 +84,10 @@
     @apply font-sans antialiased bg-background text-foreground;
     background-image: radial-gradient(circle at 75% -5%, hsl(var(--primary) / 0.09), transparent 28rem);
   }
+  @media (pointer: fine) {
+    html, body { cursor: crosshair; }
+    a, button, [role='button'] { cursor: pointer; }
+  }
   ::selection { background: hsl(var(--primary) / 0.28); color: hsl(var(--foreground)); }
 }
 
