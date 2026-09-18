@@ -1,4 +1,4 @@
-export type ProjectCategory = 'All' | 'AI / ML' | 'Full-stack' | 'Backend' | 'Cloud / DevOps';
+export type ProjectCategory = 'All' | 'AI / ML' | 'Full-stack' | 'Cloud / DevOps';
 
 export type Project = {
   id: string;

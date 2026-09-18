@@ -85,8 +85,29 @@
     background-image: radial-gradient(circle at 75% -5%, hsl(var(--primary) / 0.09), transparent 28rem);
   }
   @media (pointer: fine) {
-    html, body { cursor: crosshair; }
-    a, button, [role='button'] { cursor: pointer; }
+    html, body, a, button, [role='button'] { cursor: none; }
+    .cursor-dot, .cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      pointer-events: none;
+      border-radius: 999px;
+      transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+    }
+    .cursor-dot {
+      width: 6px;
+      height: 6px;
+      background: hsl(var(--primary));
+      box-shadow: 0 0 14px hsl(var(--primary) / .75);
+    }
+    .cursor-ring {
+      width: 28px;
+      height: 28px;
+      border: 1px solid hsl(var(--primary) / .7);
+      box-shadow: 0 0 0 4px hsl(var(--primary) / .08), inset 0 0 10px hsl(var(--primary) / .08);
+      transition: width .18s ease, height .18s ease, border-color .18s ease;
+    }
   }
   ::selection { background: hsl(var(--primary) / 0.28); color: hsl(var(--foreground)); }
 }
