@@ -119,12 +119,8 @@ function Home() {
                 <div className="flex items-center justify-between border-b border-border pb-3 font-mono text-[10px] uppercase tracking-[.14em] text-muted-foreground"><span>system.map</span><span className="text-primary">online</span></div>
                 <div className="relative mt-5 h-[calc(100%-2.4rem)] overflow-hidden rounded-lg bg-background/70">
                   <div className="absolute inset-0 grid-paper opacity-70" />
-                  <div className="absolute left-[19%] top-[18%] size-3 rounded-full bg-primary shadow-[0_0_0_8px_hsl(var(--primary)/.12),0_0_24px_hsl(var(--primary)/.5)]" />
-                  <div className="absolute left-[67%] top-[32%] size-2 rounded-full bg-primary/70 shadow-[0_0_0_7px_hsl(var(--primary)/.1)]" />
-                  <div className="absolute left-[42%] top-[66%] size-2 rounded-full bg-primary/70" />
-                  <svg className="absolute inset-0 h-full w-full opacity-60" viewBox="0 0 500 330" preserveAspectRatio="none" aria-hidden="true"><path d="M95 70 L335 105 L210 220 L95 70 M335 105 L420 250 L210 220 M210 220 L92 285" fill="none" stroke="hsl(var(--primary))" strokeOpacity=".45" strokeWidth="1" strokeDasharray="4 7" /></svg>
+                   <SystemMap />
                   <div className="absolute bottom-5 left-5 right-5 border-l border-primary pl-3 font-mono text-[10px] leading-5 text-muted-foreground"><span className="text-primary">const</span> direction = [<br /><span className="pl-3 text-foreground">'ai'</span>, <span className="text-foreground">'full-stack'</span>, <span className="text-foreground">'cloud'</span><br />];<span className="cursor-blink ml-1 text-primary">_</span></div>
-                  <div className="float-slow absolute right-5 top-5 grid size-12 place-items-center rounded-lg border border-primary/30 bg-primary/10 text-primary"><Network size={20} /></div>
                 </div>
               </div>
               <div className="absolute -bottom-5 -left-3 rounded-lg border border-border bg-card px-4 py-3 font-mono text-[10px] uppercase tracking-[.1em] shadow-xl md:-left-8"><span className="mr-2 inline-block size-1.5 rounded-full bg-primary" /> Open to internship · Jan 2027</div>
@@ -191,6 +187,53 @@ const navItems = [
 
 function SectionIntro({ number, label, title, description }: { number: string; label: string; title: string; description?: string }) {
   return <div className="max-w-2xl"><p className="font-mono text-[11px] uppercase tracking-[.18em] text-primary">{number} / {label}</p><h2 className="mt-5 text-4xl font-bold leading-[1.02] tracking-[-.05em] sm:text-5xl">{title}</h2>{description && <p className="mt-6 max-w-xl text-base leading-7 text-muted-foreground">{description}</p>}</div>;
+}
+
+const systemMapNodes = [
+  { id: 'ai', label: 'AI / ML', x: 95, y: 70, radius: 7 },
+  { id: 'full-stack', label: 'Full-stack', x: 335, y: 105, radius: 5 },
+  { id: 'cloud', label: 'Cloud', x: 210, y: 220, radius: 5 },
+  { id: 'data', label: 'Data', x: 420, y: 250, radius: 4 },
+  { id: 'ship', label: 'Ship', x: 92, y: 285, radius: 4 },
+];
+
+const systemMapConnections = [
+  ['ai', 'full-stack'],
+  ['full-stack', 'cloud'],
+  ['cloud', 'ai'],
+  ['full-stack', 'data'],
+  ['cloud', 'data'],
+  ['cloud', 'ship'],
+];
+
+function SystemMap() {
+  const [activeNode, setActiveNode] = useState<string | null>(null);
+  const activeLabel = systemMapNodes.find((node) => node.id === activeNode)?.label;
+  const isConnected = (connection: string[]) => activeNode === null || connection.includes(activeNode);
+
+  return <div className="system-map absolute inset-0" onMouseLeave={() => setActiveNode(null)}>
+    <svg className="absolute inset-0 h-full w-full" viewBox="0 0 500 330" preserveAspectRatio="none" aria-label="Interactive map of Amine's technical focus areas">
+      <defs>
+        <filter id="system-map-glow"><feGaussianBlur stdDeviation="3" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+      </defs>
+      {systemMapConnections.map(([fromId, toId]) => {
+        const from = systemMapNodes.find((node) => node.id === fromId)!;
+        const to = systemMapNodes.find((node) => node.id === toId)!;
+        const highlighted = isConnected([fromId, toId]);
+        return <line key={`${fromId}-${toId}`} x1={from.x} y1={from.y} x2={to.x} y2={to.y} className={`system-map-line ${highlighted ? 'is-connected' : 'is-muted'}`} />;
+      })}
+      {systemMapNodes.map((node, index) => {
+        const isActive = activeNode === node.id;
+        return <g key={node.id} tabIndex={0} role="button" aria-label={`Focus ${node.label} node`} onMouseEnter={() => setActiveNode(node.id)} onFocus={() => setActiveNode(node.id)} onBlur={() => setActiveNode(null)} className={`system-map-node system-map-node-${index + 1} ${isActive ? 'is-active' : ''}`}>
+          <circle cx={node.x} cy={node.y} r={node.radius + 8} className="system-map-halo" />
+          <circle cx={node.x} cy={node.y} r={node.radius} className="system-map-core" filter={isActive ? 'url(#system-map-glow)' : undefined} />
+          <text x={node.x + 12} y={node.y - 10} className="system-map-label">{node.label}</text>
+        </g>;
+      })}
+    </svg>
+    <div className="float-slow absolute right-5 top-5 grid size-12 place-items-center rounded-lg border border-primary/30 bg-primary/10 text-primary"><Network size={20} /></div>
+    <div className="absolute bottom-5 right-5 font-mono text-[9px] uppercase tracking-[.14em] text-muted-foreground/80" aria-live="polite">{activeLabel ? `focus · ${activeLabel}` : 'hover nodes'}</div>
+  </div>;
 }
 
 function InfoCell({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
