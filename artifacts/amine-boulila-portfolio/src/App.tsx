@@ -21,6 +21,7 @@ function Home() {
   const [filter, setFilter] = useState<ProjectCategory>('All');
   const [notice, setNotice] = useState('');
   const [selectedProject, setSelectedProject] = useState<(typeof projects)[number] | null>(null);
+  const [activeMapNode, setActiveMapNode] = useState<string | null>(null);
   const cursorDotRef = useRef<HTMLSpanElement>(null);
   const cursorRingRef = useRef<HTMLSpanElement>(null);
   const filteredProjects = useMemo(() => filter === 'All' ? projects : projects.filter((project) => project.category === filter), [filter]);
@@ -119,8 +120,8 @@ function Home() {
                 <div className="flex items-center justify-between border-b border-border pb-3 font-mono text-[10px] uppercase tracking-[.14em] text-muted-foreground"><span>system.map</span><span className="text-primary">online</span></div>
                 <div className="relative mt-5 h-[calc(100%-2.4rem)] overflow-hidden rounded-lg bg-background/70">
                   <div className="absolute inset-0 grid-paper opacity-70" />
-                   <SystemMap />
-                  <div className="absolute bottom-5 left-5 right-5 border-l border-primary pl-3 font-mono text-[10px] leading-5 text-muted-foreground"><span className="text-primary">const</span> direction = [<br /><span className="pl-3 text-foreground">'ai'</span>, <span className="text-foreground">'full-stack'</span>, <span className="text-foreground">'cloud'</span><br />];<span className="cursor-blink ml-1 text-primary">_</span></div>
+                   <SystemMap activeNode={activeMapNode} onActiveNodeChange={setActiveMapNode} />
+                  <div className="absolute bottom-5 left-5 right-5 border-l border-primary pl-3 font-mono text-[10px] leading-5 text-muted-foreground"><span className="text-primary">const</span> directions = [<br /><span className={`pl-3 transition-colors ${activeMapNode === 'ai' ? 'rounded bg-primary/20 text-primary' : 'text-foreground'}`}>'ai'</span>, <span className={`transition-colors ${activeMapNode === 'full-stack' ? 'rounded bg-primary/20 text-primary' : 'text-foreground'}`}>'full-stack'</span>,<br /><span className={`pl-3 transition-colors ${activeMapNode === 'data' ? 'rounded bg-primary/20 text-primary' : 'text-foreground'}`}>'data'</span>, <span className={`transition-colors ${activeMapNode === 'cloud' ? 'rounded bg-primary/20 text-primary' : 'text-foreground'}`}>'cloud'</span><br />];<span className="cursor-blink ml-1 text-primary">_</span></div>
                 </div>
               </div>
               <div className="absolute -bottom-5 -left-3 rounded-lg border border-border bg-card px-4 py-3 font-mono text-[10px] uppercase tracking-[.1em] shadow-xl md:-left-8"><span className="mr-2 inline-block size-1.5 rounded-full bg-primary" /> Open to internship · Jan 2027</div>
@@ -136,7 +137,7 @@ function Home() {
             <div className="max-w-2xl space-y-6 text-base leading-8 text-muted-foreground"><p>I’m studying Software Engineering at the Faculty of Sciences of Tunis, with a focus on the systems behind useful products — the APIs, data flows, models and infrastructure that make an idea dependable.</p><p>My work sits across AI/ML, full-stack engineering, cloud and DevOps, data engineering, and distributed systems. I like solving practical engineering problems and turning experiments into software that can be understood, extended and run.</p><p className="text-foreground">I’m looking for a challenging <span className="text-primary">4–6 month internship / PFE opportunity starting January 2027</span>, with the possibility of continuing full-time afterward.</p></div>
           </div>
           <div className="mt-16 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-3">
-            <InfoCell icon={<Layers3 size={18} />} label="Working across" value="AI · full-stack · cloud" />
+             <InfoCell icon={<Layers3 size={18} />} label="Working across" value="AI · full-stack · data · cloud" />
             <InfoCell icon={<Code2 size={18} />} label="Approach" value="Prototype → production" />
             <InfoCell icon={<ShieldCheck size={18} />} label="Currently" value="Open to internship · 01.2027" />
           </div>
@@ -206,12 +207,11 @@ const systemMapConnections = [
   ['cloud', 'ship'],
 ];
 
-function SystemMap() {
-  const [activeNode, setActiveNode] = useState<string | null>(null);
+function SystemMap({ activeNode, onActiveNodeChange }: { activeNode: string | null; onActiveNodeChange: (node: string | null) => void }) {
   const activeLabel = systemMapNodes.find((node) => node.id === activeNode)?.label;
   const isConnected = (connection: string[]) => activeNode === null || connection.includes(activeNode);
 
-  return <div className="system-map absolute inset-0" onMouseLeave={() => setActiveNode(null)}>
+  return <div className="system-map absolute inset-0" onMouseLeave={() => onActiveNodeChange(null)}>
     <svg className="absolute inset-0 h-full w-full" viewBox="0 0 500 330" preserveAspectRatio="none" aria-label="Interactive map of Amine's technical focus areas">
       <defs>
         <filter id="system-map-glow"><feGaussianBlur stdDeviation="3" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
@@ -224,7 +224,7 @@ function SystemMap() {
       })}
       {systemMapNodes.map((node, index) => {
         const isActive = activeNode === node.id;
-        return <g key={node.id} tabIndex={0} role="button" aria-label={`Focus ${node.label} node`} onMouseEnter={() => setActiveNode(node.id)} onFocus={() => setActiveNode(node.id)} onBlur={() => setActiveNode(null)} className={`system-map-node system-map-node-${index + 1} ${isActive ? 'is-active' : ''}`}>
+        return <g key={node.id} tabIndex={0} role="button" aria-label={`Focus ${node.label} node`} onMouseEnter={() => onActiveNodeChange(node.id)} onFocus={() => onActiveNodeChange(node.id)} onBlur={() => onActiveNodeChange(null)} className={`system-map-node system-map-node-${index + 1} ${isActive ? 'is-active' : ''}`}>
           <circle cx={node.x} cy={node.y} r={node.radius + 8} className="system-map-halo" />
           <circle cx={node.x} cy={node.y} r={node.radius} className="system-map-core" filter={isActive ? 'url(#system-map-glow)' : undefined} />
           <text x={node.x + 12} y={node.y - 10} className="system-map-label">{node.label}</text>
