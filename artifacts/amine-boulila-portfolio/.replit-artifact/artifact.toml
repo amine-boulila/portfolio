@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Amine Boulila Portfolio"
+description = "A recruiter-focused personal portfolio for Amine Boulila, a software engineering student building AI-powered applications, backend systems, and cloud-ready software."
+version = "1.0.0"
+id = "artifacts/amine-boulila-portfolio"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25800
+
+[services.development]
+run = "pnpm --filter @workspace/amine-boulila-portfolio run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/amine-boulila-portfolio", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/amine-boulila-portfolio/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25800"
+BASE_PATH = "/"

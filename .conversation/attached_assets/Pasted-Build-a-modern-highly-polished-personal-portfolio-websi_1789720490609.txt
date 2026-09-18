@@ -1,0 +1,481 @@
+Build a modern, highly polished personal portfolio website for me as a Software Engineering student and aspiring Software Engineer.
+
+The portfolio should be designed primarily to help me attract recruiters, engineering managers, and companies for a 4–6 month PFE / Final Year Project internship starting January 2027, with the possibility of a full-time opportunity afterward.
+
+## PERSONAL PROFILE
+
+Name: Amine Boulila
+Role: Software Engineering Student
+Location: Tunisia
+Expected graduation: 2027
+
+Main interests:
+- AI / Machine Learning
+- Backend Engineering
+- Cloud & DevOps
+- Data Engineering
+- Full-Stack Development
+
+Technical skills:
+- Languages: Java, C++, C, C#, Python, JavaScript, TypeScript
+- Frontend: React, Next.js, Flutter
+- Backend: Node.js, Django, FastAPI, .NET, REST APIs, GraphQL
+- AI/ML: Python, NLP, Machine Learning, PyTorch, Scikit-learn, YOLO, LLMs, RAG
+- Databases: PostgreSQL, MongoDB, MySQL
+- DevOps/Cloud: Docker, Git, Linux, CI/CD, AWS
+- AI tools/infrastructure: Ollama, local LLMs, OpenAI-compatible APIs
+- Other: WebSockets, Redis, Hadoop
+
+Certifications:
+- AWS Certified Cloud Practitioner
+- NVIDIA Fundamentals of Deep Learning
+
+## IMPORTANT POSITIONING
+
+Do NOT make the website feel like a typical student portfolio.
+
+Position me as:
+"Software Engineering Student building AI-powered, backend, and cloud systems."
+
+The site should communicate:
+- I build real software, not just academic projects.
+- I am comfortable working across backend, AI and infrastructure.
+- I care about engineering quality and production-oriented systems.
+- I actively learn and build publicly.
+- I am looking for a PFE starting January 2027.
+
+Avoid exaggerated claims such as "expert", "AI guru", "10x engineer", etc.
+
+The tone should be confident, technical, concise and human.
+
+## WEBSITE STRUCTURE
+
+Create the following sections:
+
+### 1. HERO
+
+Large, visually impressive hero section.
+
+Display:
+
+"Amine Boulila"
+
+"Software Engineering Student · AI · Backend · Cloud"
+
+Short description:
+
+"I build AI-powered applications, backend systems and cloud-ready software — from prototypes to production-oriented solutions."
+
+Then a clear availability badge:
+
+"Open to PFE opportunities · January 2027"
+
+Primary buttons:
+- View Projects
+- Download CV
+
+Secondary links:
+- GitHub
+- LinkedIn
+- Email
+
+Include a subtle animated technical visual in the background, such as a network/grid/code-inspired visualization.
+
+Do NOT make it overly flashy.
+
+### 2. ABOUT
+
+Short introduction explaining who I am and what I work on.
+
+Mention:
+- Software engineering background
+- Interest in AI/ML, backend engineering and cloud/DevOps
+- Experience building real-world applications
+- Interest in solving practical engineering problems
+- Looking for a challenging PFE opportunity starting January 2027
+
+Keep this section concise.
+
+### 3. TECH STACK
+
+Create a beautiful interactive technology section.
+
+Group technologies into:
+
+Languages
+Java · C++ · C · C# · Python · JavaScript · TypeScript
+
+Frontend
+React · Next.js · Flutter
+
+Backend
+Node.js · Django · FastAPI · .NET · REST · GraphQL
+
+AI / ML
+PyTorch · Scikit-learn · NLP · LLMs · RAG · YOLO · Ollama
+
+Databases
+PostgreSQL · MongoDB · MySQL · Redis
+
+Cloud / DevOps
+AWS · Docker · Linux · Git · CI/CD
+
+Use technology icons where possible.
+
+Do not make skill percentages or progress bars. I don't want fake metrics like "Python 95%".
+
+### 4. FEATURED PROJECTS
+
+This should be the most important section of the website.
+
+Create large project cards with:
+- Project name
+- Short description
+- Problem solved
+- Technologies
+- My contribution
+- GitHub link
+- Demo link if available
+
+Projects:
+
+#### Agrovalplus
+A full-stack agricultural/business platform.
+
+Technologies:
+MERN stack, Node.js, React, MongoDB, Konnect
+
+Highlight:
+- Full-stack architecture
+- Payment integration
+- Real-world application development
+
+#### Attijari Bank — Intelligent Document Processing
+AI-powered pipeline for extracting structured information from scanned mortgage documents.
+
+Technologies:
+Python, Tesseract OCR, Ollama, Qwen3, FastAPI, PostgreSQL, Redis, Docker
+
+Architecture:
+PDF → Image preprocessing → OCR → Local LLM → Structured JSON → Database / Excel
+
+Highlight:
+- OCR
+- NLP / LLMs
+- Local AI inference
+- Structured information extraction
+- Backend APIs
+- PostgreSQL
+- Redis
+- Docker
+- Production-oriented architecture
+
+This project should visually stand out because it demonstrates real-world AI engineering.
+
+#### Optima Logistic
+A logistics platform developed during an internship.
+
+Technologies:
+Next.js, Django, MySQL, Docker, Figma
+
+Highlight:
+- Full-stack development
+- Backend APIs
+- Database integration
+- Business application development
+
+#### AI / LLM Projects
+Create a section/card for experimental AI projects involving:
+- LLMs
+- RAG
+- AI agents
+- Local models
+- Tool calling
+- Automation
+
+Make this section easy to expand later.
+
+### 5. EXPERIENCE
+
+Create a clean timeline.
+
+Include:
+
+Attijari Bank Tunisia
+Software Engineering / AI Internship
+2026
+
+Focus:
+- OCR
+- NLP
+- LLM-based document processing
+- Backend development
+- PostgreSQL
+- Redis
+- Docker
+
+Optima Junior Entreprise / Optima Logistic
+Software Engineering Internship
+2025
+
+Focus:
+- Next.js
+- Django
+- MySQL
+- Business applications
+- Full-stack development
+
+Do not invent dates, responsibilities, metrics or achievements beyond the information provided.
+
+### 6. EDUCATION
+
+Faculty of Sciences of Tunis (FST)
+
+Software Engineering
+
+Expected graduation: 2027
+
+Structure it clearly so that the engineering education is easy for recruiters to understand.
+
+Include a small achievement:
+"Ranked in the Top 10 of my promotion during pre-engineering studies."
+
+### 7. ENGINEERING / BUILDING IN PUBLIC
+
+I want this portfolio to also help establish my public technical presence.
+
+Create a section called:
+
+"Currently Building"
+
+Display 3–4 current focus areas:
+
+- AI Agents & LLM applications
+- Cloud & DevOps
+- Backend architecture
+- Open-source developer tools
+
+Each can have a small status indicator such as:
+"Learning"
+"Building"
+"Exploring"
+
+Make this section easy for me to update later.
+
+### 8. GITHUB / OPEN SOURCE
+
+Create a section encouraging visitors to explore my GitHub.
+
+Title:
+
+"Building in public."
+
+Text:
+
+"I like turning what I learn into working software, experiments and reusable tools."
+
+Include:
+- GitHub button
+- Placeholder for GitHub username
+- Repository cards that can later be connected to GitHub API
+
+If practical, implement GitHub API integration to automatically display my latest repositories.
+
+Do not require a backend just for this unless necessary.
+
+### 9. CONTACT / OPPORTUNITY
+
+Create a strong final CTA.
+
+Title:
+
+"Let's build something useful."
+
+Text:
+
+"I'm currently looking for a PFE opportunity starting January 2027 in AI/ML, backend engineering, cloud/DevOps or related software engineering roles."
+
+Buttons:
+- Contact me
+- LinkedIn
+- GitHub
+- Download CV
+
+Include a simple contact form with:
+Name
+Email
+Message
+
+Use a mailto fallback if no backend/email provider is configured.
+
+## DESIGN
+
+Use a premium engineering aesthetic.
+
+Style:
+- Minimal
+- Modern
+- Technical
+- Clean
+- Dark-first
+- Excellent typography
+- Subtle animations
+- Lots of whitespace
+- Strong visual hierarchy
+
+Color palette should be mostly dark neutral tones with one tasteful accent color.
+
+Avoid:
+- Generic portfolio templates
+- Excessive gradients
+- Giant animations
+- Skill percentage bars
+- Stock photos
+- Fake statistics
+- "Hello, I'm Amine" generic template language
+- Excessive text
+- Overly corporate design
+
+Use subtle:
+- Grid backgrounds
+- Glow effects
+- Code-inspired details
+- Hover animations
+- Smooth section transitions
+- Scroll reveal animations
+
+The site should look credible to a senior software engineer reviewing it.
+
+## TECHNICAL REQUIREMENTS
+
+Use:
+- Next.js
+- TypeScript
+- Tailwind CSS
+- shadcn/ui where useful
+- Lucide icons
+
+Make it:
+- Fully responsive
+- Mobile-first
+- Fast-loading
+- SEO-friendly
+- Accessible
+- Semantic HTML
+- Good Lighthouse performance
+
+Implement:
+- Sticky navbar
+- Smooth scrolling
+- Dark/light mode
+- Responsive mobile menu
+- Project filtering by category
+- Subtle hover animations
+- Scroll animations
+- Download CV button
+- Social links
+
+Add proper metadata:
+Title:
+"Amine Boulila — Software Engineering Student | AI · Backend · Cloud"
+
+Description:
+"Portfolio of Amine Boulila, a software engineering student building AI-powered applications, backend systems and cloud-ready software."
+
+## NAVIGATION
+
+Navbar:
+
+Amine Boulila
+
+About
+Skills
+Projects
+Experience
+Education
+Building
+Contact
+
+Right side:
+GitHub icon
+LinkedIn icon
+"Open to PFE" badge
+
+## IMPORTANT UX PRIORITY
+
+A recruiter should understand within 10 seconds:
+
+1. Who I am
+2. What I build
+3. What technologies I use
+4. That I am looking for a PFE starting January 2027
+5. How to contact me
+6. Where to see my projects
+
+Make the portfolio tell a coherent story:
+
+Software Engineering
+→ Real-world experience
+→ AI / Backend / Cloud projects
+→ Technical skills
+→ Currently building
+→ Open to PFE
+
+## CONTENT QUALITY
+
+Do not generate generic filler text.
+
+Do not invent:
+- Companies
+- Job titles
+- Project metrics
+- User numbers
+- Revenue
+- Performance improvements
+- Awards
+- Technologies I haven't listed
+- Fake testimonials
+
+Where information is missing, use clearly marked placeholders such as:
+[GitHub URL]
+[LinkedIn URL]
+[CV PDF]
+[Project Demo]
+
+## CODE QUALITY
+
+Structure the project cleanly with reusable components.
+
+For example:
+
+components/
+  Navbar
+  Hero
+  About
+  Skills
+  Projects
+  ProjectCard
+  Experience
+  Education
+  CurrentlyBuilding
+  GitHubSection
+  Contact
+  Footer
+
+data/
+  projects.ts
+  skills.ts
+  experience.ts
+
+Keep content separated from UI components so I can easily update projects and skills later.
+
+Before finishing:
+- Make sure the site builds successfully.
+- Fix TypeScript errors.
+- Fix responsive issues.
+- Make sure there are no broken links.
+- Make sure animations do not hurt performance.
+- Test mobile and desktop layouts.
+- Make the final result production-ready.
+
+Most importantly: make this look like the portfolio of a promising software engineer who builds serious technical projects, not a university assignment.
