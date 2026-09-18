@@ -102,7 +102,7 @@ function Home() {
           <div className="absolute -right-40 top-14 -z-10 size-[28rem] rounded-full bg-primary/10 blur-3xl" />
           <div className="mx-auto grid max-w-7xl gap-14 px-5 pb-24 pt-16 md:grid-cols-[1.1fr_.9fr] md:items-end md:pb-32 md:pt-24 lg:px-10">
             <div className="reveal">
-              <p className="mb-7 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[.18em] text-primary"><span className="inline-block size-1.5 rounded-full bg-primary shadow-[0_0_0_4px_hsl(var(--primary)/.12)]" /> Tunisia · Software engineering student</p>
+              <p className="mb-7 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[.18em] text-primary"><span className="inline-block size-1.5 rounded-full bg-primary shadow-[0_0_0_4px_hsl(var(--primary)/.12)]" /> Software engineering student</p>
               <h1 className="max-w-4xl text-balance text-[3.45rem] font-extrabold leading-[.96] tracking-[-.065em] sm:text-6xl md:text-7xl lg:text-[6.7rem]">Build systems<br /><span className="text-primary">worth running.</span></h1>
               <p className="mt-8 max-w-xl text-lg leading-8 text-muted-foreground md:text-xl">I’m <strong className="font-semibold text-foreground">Amine Boulila</strong> — a software engineering student building AI-powered applications, full-stack systems and cloud-ready software.</p>
               <div className="mt-8 flex flex-wrap items-center gap-3">
