@@ -104,6 +104,10 @@ function Home() {
     (typeof experiences)[number] | null
   >(null);
   const [activeMapNode, setActiveMapNode] = useState<string | null>(null);
+  const [heroTitleInverted, setHeroTitleInverted] = useState(false);
+  const [skillLabStep, setSkillLabStep] = useState(0);
+  const [skillLabScore, setSkillLabScore] = useState(0);
+  const [skillLabComplete, setSkillLabComplete] = useState(false);
   const [formState, handleFormSubmit] = useFormspree("xppwwzqn");
   const cursorDotRef = useRef<HTMLSpanElement>(null);
   const cursorRingRef = useRef<HTMLSpanElement>(null);
@@ -128,6 +132,13 @@ function Home() {
     document.documentElement.classList.toggle("dark", !lightMode);
     localStorage.setItem("amine-theme", lightMode ? "light" : "dark");
   }, [lightMode]);
+
+  useEffect(() => {
+    const updateHeroTitle = () => setHeroTitleInverted(window.scrollY > 120);
+    updateHeroTitle();
+    window.addEventListener("scroll", updateHeroTitle, { passive: true });
+    return () => window.removeEventListener("scroll", updateHeroTitle);
+  }, []);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(pointer: fine)");
@@ -258,16 +269,27 @@ function Home() {
         <section className="relative isolate overflow-hidden border-b border-border/70">
           <div className="grid-paper pointer-events-none absolute inset-0 -z-10 opacity-55" />
           <div className="absolute -right-40 top-14 -z-10 size-[28rem] rounded-full bg-primary/10 blur-3xl" />
-          <div className="mx-auto grid max-w-7xl gap-14 px-5 pb-24 pt-16 md:grid-cols-[1.1fr_.9fr] md:items-end md:pb-32 md:pt-24 lg:px-10">
+          <div className="mx-auto grid max-w-7xl gap-14 px-5 pb-24 pt-16 md:grid-cols-[2fr_1fr] md:items-end md:pb-32 md:pt-24 lg:px-10">
             <div className="reveal">
+              <p className="mb-4 font-mono text-[11px] uppercase tracking-[.18em] text-primary">
+                &lt; Hello World /&gt;
+              </p>
               <p className="mb-7 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[.18em] text-primary">
                 <span className="inline-block size-1.5 rounded-full bg-primary shadow-[0_0_0_4px_hsl(var(--primary)/.12)]" />{" "}
                 Software engineering student
               </p>
               <h1 className="max-w-4xl text-balance text-[3.45rem] font-extrabold leading-[.96] tracking-[-.065em] sm:text-6xl md:text-7xl lg:text-[6.7rem]">
-                Build systems
+                <span
+                  className={`transition-colors duration-700 ${heroTitleInverted ? "text-primary" : "text-foreground"}`}
+                >
+                  Build systems
+                </span>
                 <br />
-                <span className="text-primary">worth running.</span>
+                <span
+                  className={`transition-colors duration-700 ${heroTitleInverted ? "text-foreground" : "text-primary"}`}
+                >
+                  worth running.
+                </span>
               </h1>
               <p className="mt-8 max-w-xl text-lg leading-8 text-muted-foreground md:text-xl">
                 I’m{" "}
@@ -317,57 +339,16 @@ function Home() {
                   <Linkedin size={15} /> LinkedIn
                 </a>
                 <a
-                  href="mailto:amin.boulila@gmail.com"
+                  href="mailto:amin.boulila@etudiant-fst.utm.tn"
                   className="inline-flex items-center gap-2 transition hover:text-primary"
                   data-testid="link-hero-email"
                 >
-                  <Mail size={15} /> Email
+                  <Mail size={15} /> amin.boulila@etudiant-fst.utm.tn
                 </a>
               </div>
             </div>
             <div className="reveal reveal-delay-2 relative min-h-[22rem] md:min-h-[28rem]">
-              <div className="absolute inset-0 rounded-xl border border-border/80 bg-card/55 p-4 backdrop-blur-sm">
-                <div className="flex items-center justify-between border-b border-border pb-3 font-mono text-[10px] uppercase tracking-[.14em] text-muted-foreground">
-                  <span>system.map</span>
-                  <span className="text-primary">online</span>
-                </div>
-                <div className="relative mt-5 h-[calc(100%-2.4rem)] overflow-hidden rounded-lg bg-background/70">
-                  <div className="absolute inset-0 grid-paper opacity-70" />
-                  <SystemMap
-                    activeNode={activeMapNode}
-                    onActiveNodeChange={setActiveMapNode}
-                  />
-                  <div className="absolute bottom-5 left-5 right-5 border-l border-primary pl-3 font-mono text-[10px] leading-5 text-muted-foreground">
-                    <span className="text-primary">const</span> directions = [
-                    <br />
-                    <span
-                      className={`pl-3 transition-colors ${activeMapNode === "ai" ? "rounded bg-primary/20 text-primary" : "text-foreground"}`}
-                    >
-                      'ai'
-                    </span>
-                    ,{" "}
-                    <span
-                      className={`transition-colors ${activeMapNode === "full-stack" ? "rounded bg-primary/20 text-primary" : "text-foreground"}`}
-                    >
-                      'full-stack'
-                    </span>
-                    ,<br />
-                    <span
-                      className={`pl-3 transition-colors ${activeMapNode === "data" ? "rounded bg-primary/20 text-primary" : "text-foreground"}`}
-                    >
-                      'data'
-                    </span>
-                    ,{" "}
-                    <span
-                      className={`transition-colors ${activeMapNode === "cloud" ? "rounded bg-primary/20 text-primary" : "text-foreground"}`}
-                    >
-                      'cloud'
-                    </span>
-                    <br />
-                    ];<span className="cursor-blink ml-1 text-primary">_</span>
-                  </div>
-                </div>
-              </div>
+              <DeveloperCodeCard />
               <div className="absolute -bottom-5 -left-3 rounded-lg border border-border bg-card px-4 py-3 font-mono text-[10px] uppercase tracking-[.1em] shadow-xl md:-left-8">
                 <span className="mr-2 inline-block size-1.5 rounded-full bg-primary" />{" "}
                 Open to internship · Jan 2027
@@ -697,6 +678,38 @@ function Home() {
           </div>
         </section>
 
+        <section
+          id="skill-lab"
+          className="scroll-mt-20 border-y border-border bg-card/45"
+        >
+          <div className="mx-auto max-w-7xl px-5 py-24 lg:px-10 lg:py-32">
+            <SectionIntro
+              number="07"
+              label="Skill lab"
+              title="Can you ship the pipeline?"
+              description="A tiny systems challenge. Choose the technology that best fits each stage of the build, then see how your engineering instincts score."
+            />
+            <SkillLab
+              step={skillLabStep}
+              score={skillLabScore}
+              complete={skillLabComplete}
+              onAnswer={(isCorrect) => {
+                if (isCorrect) setSkillLabScore((value) => value + 1);
+                if (skillLabStep === skillLabChallenges.length - 1) {
+                  setSkillLabComplete(true);
+                } else {
+                  setSkillLabStep((value) => value + 1);
+                }
+              }}
+              onReset={() => {
+                setSkillLabStep(0);
+                setSkillLabScore(0);
+                setSkillLabComplete(false);
+              }}
+            />
+          </div>
+        </section>
+
         <section id="contact" className="scroll-mt-20 border-t border-border">
           <div className="mx-auto max-w-7xl px-5 py-24 lg:px-10 lg:py-32">
             <div className="grid gap-14 lg:grid-cols-[1fr_.85fr] lg:gap-24">
@@ -732,11 +745,11 @@ function Home() {
                     <Github size={15} /> GitHub
                   </a>
                   <a
-                    href="mailto:amin.boulila@gmail.com"
+                    href="mailto:amin.boulila@etudiant-fst.utm.tn"
                     className="inline-flex items-center gap-2 rounded-md border border-border px-4 py-3 font-mono text-xs transition hover:border-primary hover:text-primary"
                     data-testid="button-contact-email"
                   >
-                    <Mail size={15} /> Email me
+                    <Mail size={15} /> amin.boulila@etudiant-fst.utm.tn
                   </a>
                   <button
                     onClick={downloadCv}
@@ -898,6 +911,7 @@ const navItems = [
   { label: "Experience", href: "#experience" },
   { label: "Education", href: "#education" },
   { label: "Building", href: "#building" },
+  { label: "Skill Lab", href: "#skill-lab" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -916,6 +930,127 @@ const moreWorkProjectIds = [
 function orderProjects(projectList: typeof projects, projectIds: string[]) {
   return projectIds.flatMap((projectId) =>
     projectList.filter((project) => project.id === projectId),
+  );
+}
+
+const skillLabChallenges = [
+  {
+    stage: "01 / Extract",
+    prompt: "Turn scanned mortgage PDFs into readable text.",
+    options: ["Tesseract OCR", "Redis", "Kubernetes"],
+    answer: "Tesseract OCR",
+  },
+  {
+    stage: "02 / Ground",
+    prompt: "Keep an insurance agent grounded in policy documents.",
+    options: ["RAG pipeline", "CSS grid", "Load balancer"],
+    answer: "RAG pipeline",
+  },
+  {
+    stage: "03 / Serve",
+    prompt: "Expose a typed backend endpoint for a product workflow.",
+    options: ["REST API", "Vector database", "OCR preprocessing"],
+    answer: "REST API",
+  },
+  {
+    stage: "04 / Run",
+    prompt: "Package the application for repeatable cloud deployment.",
+    options: ["Docker", "Embeddings", "Figma"],
+    answer: "Docker",
+  },
+];
+
+function SkillLab({
+  step,
+  score,
+  complete,
+  onAnswer,
+  onReset,
+}: {
+  step: number;
+  score: number;
+  complete: boolean;
+  onAnswer: (isCorrect: boolean) => void;
+  onReset: () => void;
+}) {
+  const challenge = skillLabChallenges[step];
+
+  if (complete) {
+    return (
+      <div className="mt-14 max-w-3xl rounded-xl border border-primary/30 bg-card p-7 md:p-10">
+        <p className="font-mono text-[11px] uppercase tracking-[.18em] text-primary">
+          Pipeline complete
+        </p>
+        <h3 className="mt-5 text-3xl font-bold tracking-tight">
+          {score} / {skillLabChallenges.length} decisions shipped.
+        </h3>
+        <p className="mt-4 max-w-xl leading-7 text-muted-foreground">
+          You just traced the same kind of path behind Amine&apos;s AI, backend,
+          and cloud work.
+        </p>
+        <button
+          type="button"
+          onClick={onReset}
+          className="mt-8 inline-flex items-center gap-2 rounded-md border border-border px-4 py-3 font-mono text-xs uppercase tracking-[.1em] transition hover:border-primary hover:text-primary"
+          data-testid="button-skill-lab-reset"
+        >
+          Run it again <ArrowUpRight size={14} />
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-14 grid max-w-5xl gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-[.8fr_1.2fr]">
+      <div className="bg-background p-7 md:p-10">
+        <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[.14em] text-muted-foreground">
+          <span className="text-primary">{challenge.stage}</span>
+          <span>
+            {step + 1} / {skillLabChallenges.length}
+          </span>
+        </div>
+        <div className="mt-14 flex items-center gap-3 text-primary">
+          <span className="grid size-10 place-items-center rounded-md bg-primary/10">
+            <Terminal size={18} />
+          </span>
+          <span className="font-mono text-xs uppercase tracking-[.12em]">
+            architecture.run()
+          </span>
+        </div>
+        <h3 className="mt-8 max-w-md text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
+          {challenge.prompt}
+        </h3>
+        <div className="mt-10 h-1 overflow-hidden rounded-full bg-muted">
+          <div
+            className="h-full bg-primary transition-all duration-500"
+            style={{ width: `${((step + 1) / skillLabChallenges.length) * 100}%` }}
+          />
+        </div>
+      </div>
+      <div className="bg-card p-7 md:p-10">
+        <p className="font-mono text-[10px] uppercase tracking-[.14em] text-muted-foreground">
+          Select one component
+        </p>
+        <div className="mt-5 grid gap-3">
+          {challenge.options.map((option) => (
+            <button
+              key={option}
+              type="button"
+              onClick={() => onAnswer(option === challenge.answer)}
+              className="group flex items-center justify-between rounded-md border border-border bg-background px-4 py-4 text-left font-mono text-sm transition hover:-translate-y-0.5 hover:border-primary hover:text-primary"
+              data-testid={`button-skill-lab-${option.toLowerCase().replaceAll(" ", "-")}`}
+            >
+              <span>{option}</span>
+              <ArrowUpRight size={15} className="opacity-50 transition group-hover:opacity-100" />
+            </button>
+          ))}
+        </div>
+        <div className="mt-10 flex items-center justify-between border-t border-border pt-5 font-mono text-[10px] uppercase tracking-[.12em] text-muted-foreground">
+          <span>Score: {score}</span>
+          <span className="text-primary">Keep shipping</span>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -986,6 +1121,83 @@ const technologyIcons: Record<string, IconType> = {
   YOLO: SiYolo,
 };
 
+const heroSkillChallenges = [
+  {
+    prompt: "Extract fields from scanned mortgage PDFs",
+    answer: "OCR + LLM",
+    options: ["OCR + LLM", "React + Vite", "Docker + AWS"],
+  },
+  {
+    prompt: "Ground an insurance assistant in policy documents",
+    answer: "RAG pipeline",
+    options: ["RAG pipeline", "CSS grid", "Load balancer"],
+  },
+  {
+    prompt: "Run a resilient service in production",
+    answer: "Cloud + DevOps",
+    options: ["Cloud + DevOps", "OCR + LLM", "UI prototyping"],
+  },
+];
+
+function HeroSkillGame() {
+  const [round, setRound] = useState(0);
+  const [score, setScore] = useState(0);
+  const [feedback, setFeedback] = useState<string | null>(null);
+  const challenge = heroSkillChallenges[round];
+  const complete = round >= heroSkillChallenges.length;
+
+  const chooseAnswer = (answer: string) => {
+    if (feedback) return;
+    const correct = answer === challenge.answer;
+    if (correct) setScore((value) => value + 1);
+    setFeedback(correct ? "Signal matched" : `Best match: ${challenge.answer}`);
+    window.setTimeout(() => {
+      setFeedback(null);
+      setRound((value) => value + 1);
+    }, 850);
+  };
+
+  const reset = () => {
+    setRound(0);
+    setScore(0);
+    setFeedback(null);
+  };
+
+  if (complete) {
+    return (
+      <div className="relative z-10 flex h-full flex-col justify-center p-5 font-mono">
+        <span className="text-[10px] uppercase tracking-[.16em] text-primary">Signal complete</span>
+        <strong className="mt-4 text-3xl tracking-tight text-foreground">{score} / {heroSkillChallenges.length}</strong>
+        <span className="mt-2 text-xs leading-5 text-muted-foreground">You found the stack behind the work.</span>
+        <button type="button" onClick={reset} className="mt-6 inline-flex w-fit items-center gap-2 rounded-md border border-border px-3 py-2 text-[10px] uppercase tracking-[.12em] text-muted-foreground transition hover:border-primary hover:text-primary" data-testid="button-hero-skill-reset">Run again <ArrowUpRight size={12} /></button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative z-10 flex h-full flex-col justify-center p-5 font-mono">
+      <div className="flex items-center justify-between text-[10px] uppercase tracking-[.14em] text-muted-foreground">
+        <span className="text-primary">skill.signal()</span>
+        <span>{round + 1} / {heroSkillChallenges.length}</span>
+      </div>
+      <div className="mt-5 h-1 overflow-hidden rounded-full bg-muted">
+        <div className="h-full bg-primary transition-all duration-500" style={{ width: `${((round + 1) / heroSkillChallenges.length) * 100}%` }} />
+      </div>
+      <p className="mt-8 text-sm leading-6 text-foreground">{challenge.prompt}</p>
+      <div className="mt-5 grid gap-2">
+        {challenge.options.map((option) => (
+          <button key={option} type="button" onClick={() => chooseAnswer(option)} disabled={Boolean(feedback)} className={`flex items-center justify-between rounded-md border px-3 py-2.5 text-left text-[11px] transition ${feedback && option === challenge.answer ? "border-primary bg-primary/15 text-primary" : "border-border bg-background/70 text-muted-foreground hover:-translate-y-0.5 hover:border-primary hover:text-primary"}`} data-testid={`button-hero-skill-${option.toLowerCase().replaceAll(" ", "-")}`}>
+            <span>{option}</span><ArrowUpRight size={12} />
+          </button>
+        ))}
+      </div>
+      <div className="mt-5 flex min-h-4 items-center justify-between text-[10px] uppercase tracking-[.12em] text-muted-foreground" aria-live="polite">
+        <span>{feedback ?? "Choose a signal"}</span><span>Score {score}</span>
+      </div>
+    </div>
+  );
+}
+
 function TechnologyIcon({ name }: { name: string }) {
   const Icon = technologyIcons[name] ?? Code2;
   return (
@@ -993,21 +1205,62 @@ function TechnologyIcon({ name }: { name: string }) {
   );
 }
 
+function DeveloperCodeCard() {
+  return (
+    <div className="developer-card-float relative">
+      <div className="developer-card-glow absolute -inset-3 rounded-[1.5rem] bg-[radial-gradient(circle_at_50%_35%,hsl(var(--primary)/.16),transparent_68%)]" aria-hidden="true" />
+      <div className="developer-card relative mx-auto w-full max-w-[31rem] overflow-hidden rounded-2xl border border-border bg-card text-foreground shadow-[0_18px_50px_hsl(var(--background)/.22)]">
+      <div className="flex h-10 items-center border-b border-border px-3">
+        <div className="flex items-center gap-1.5" aria-hidden="true">
+          <span className="size-2 rounded-full bg-[#ff5f57]" />
+          <span className="size-2 rounded-full bg-[#febc2e]" />
+          <span className="size-2 rounded-full bg-[#28c840]" />
+        </div>
+        <span className="absolute left-1/2 -translate-x-1/2 font-mono text-[10px] text-muted-foreground">
+          developer.ts
+        </span>
+      </div>
+      <pre className="overflow-hidden px-4 py-4 font-mono text-[9px] leading-[1.7] text-muted-foreground sm:px-5 sm:py-5 sm:text-[10px] md:text-[11px]"><code>
+        <span className="developer-code-keyword">const</span>{" "}<span className="developer-code-property">developer</span> <span className="developer-code-punctuation">=</span> <span className="developer-code-punctuation">&#123;</span>{"\n"}
+        {"  "}<span className="developer-code-property">name</span><span className="developer-code-punctuation">:</span> <span className="developer-code-string">&quot;Amine Boulila&quot;</span><span className="developer-code-punctuation">,</span>{"\n"}
+        {"  "}<span className="developer-code-property">role</span><span className="developer-code-punctuation">:</span> <span className="developer-code-string">&quot;Software Engineer&quot;</span><span className="developer-code-punctuation">,</span>{"\n\n"}
+        {"  "}<span className="developer-code-property">stack</span><span className="developer-code-punctuation">:</span> <span className="developer-code-punctuation">[</span>{"\n"}
+        {"    "}<span className="developer-code-string">&quot;TypeScript&quot;</span><span className="developer-code-punctuation">,</span>{"\n"}
+        {"    "}<span className="developer-code-string">&quot;React&quot;</span><span className="developer-code-punctuation">,</span>{"\n"}
+        {"    "}<span className="developer-code-string">&quot;Next.js&quot;</span><span className="developer-code-punctuation">,</span>{"\n"}
+        {"    "}<span className="developer-code-string">&quot;Python&quot;</span><span className="developer-code-punctuation">,</span>{"\n"}
+        {"    "}<span className="developer-code-string">&quot;FastAPI&quot;</span><span className="developer-code-punctuation">,</span>{"\n"}
+        {"    "}<span className="developer-code-string">&quot;PostgreSQL&quot;</span><span className="developer-code-punctuation">,</span>{"\n"}
+        {"    "}<span className="developer-code-string">&quot;Docker&quot;</span><span className="developer-code-punctuation">,</span>{"\n"}
+        {"    "}<span className="developer-code-string">&quot;AWS&quot;</span>{"\n"}
+        {"  "}<span className="developer-code-punctuation">],</span>{"\n\n"}
+        {"  "}<span className="developer-code-property">interests</span><span className="developer-code-punctuation">:</span> <span className="developer-code-punctuation">[</span>{"\n"}
+        {"    "}<span className="developer-code-string">&quot;AI &amp; LLM Applications&quot;</span><span className="developer-code-punctuation">,</span>{"\n"}
+        {"    "}<span className="developer-code-string">&quot;Cloud &amp; DevOps&quot;</span><span className="developer-code-punctuation">,</span>{"\n"}
+        {"    "}<span className="developer-code-string">&quot;Backend Engineering&quot;</span>{"\n"}
+        {"  "}<span className="developer-code-punctuation">],</span>{"\n\n"}
+        {"  "}<span className="developer-code-property">build</span><span className="developer-code-punctuation">:</span> <span className="developer-code-keyword">() =&gt;</span> <span className="developer-code-string">&quot;Useful products, intelligent systems&quot;</span>{"\n"}
+        <span className="developer-code-punctuation">&#125;</span><span className="developer-code-punctuation">;</span><span className="cursor-blink ml-1 developer-code-keyword">_</span>
+      </code></pre>
+      </div>
+    </div>
+  );
+}
+
 const systemMapNodes = [
-  { id: "ai", label: "AI / ML", x: 95, y: 70, radius: 7 },
-  { id: "full-stack", label: "Full-stack", x: 335, y: 105, radius: 5 },
-  { id: "cloud", label: "Cloud", x: 210, y: 220, radius: 5 },
-  { id: "data", label: "Data", x: 420, y: 250, radius: 4 },
-  { id: "ship", label: "Ship", x: 92, y: 285, radius: 4 },
+  { id: "ai", label: "AI / ML", x: 250, y: 52, radius: 7 },
+  { id: "full-stack", label: "Full-stack", x: 365, y: 135, radius: 5 },
+  { id: "cloud", label: "Cloud", x: 320, y: 265, radius: 5 },
+  { id: "data", label: "Data", x: 180, y: 265, radius: 5 },
+  { id: "ship", label: "Ship", x: 135, y: 135, radius: 6 },
 ];
 
 const systemMapConnections = [
   ["ai", "full-stack"],
   ["full-stack", "cloud"],
-  ["cloud", "ai"],
-  ["full-stack", "data"],
   ["cloud", "data"],
-  ["cloud", "ship"],
+  ["data", "ship"],
+  ["ship", "ai"],
 ];
 
 function SystemMap({
@@ -1043,6 +1296,7 @@ function SystemMap({
             </feMerge>
           </filter>
         </defs>
+        <circle cx="250" cy="160" r="118" className="system-map-orbit" />
         {systemMapConnections.map(([fromId, toId]) => {
           const from = systemMapNodes.find((node) => node.id === fromId)!;
           const to = systemMapNodes.find((node) => node.id === toId)!;
@@ -1062,7 +1316,6 @@ function SystemMap({
           const isActive = activeNode === node.id;
           return (
             <g
-              key={node.id}
               tabIndex={0}
               role="button"
               aria-label={`Focus ${node.label} node`}
@@ -1164,7 +1417,7 @@ function ProjectCard({
           target="_blank"
           rel="noreferrer"
           onClick={(event) => event.stopPropagation()}
-          className="absolute right-6 top-5 z-10 inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[.12em] text-primary transition hover:border-primary hover:bg-primary hover:text-primary-foreground"
+          className="project-live-badge absolute right-6 top-5 z-10 inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[.12em] text-primary transition hover:border-primary hover:bg-primary hover:text-primary-foreground"
           aria-label={`Open ${project.name} website`}
           data-testid={`link-project-live-${project.id}`}
         >
