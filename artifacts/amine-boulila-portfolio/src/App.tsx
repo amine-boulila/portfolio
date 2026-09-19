@@ -1158,8 +1158,23 @@ function ProjectCard({
       data-testid={`card-project-${project.id}`}
       aria-label={`Open details for ${project.name}`}
     >
+      {project.liveUrl && (
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noreferrer"
+          onClick={(event) => event.stopPropagation()}
+          className="absolute right-6 top-5 z-10 inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[.12em] text-primary transition hover:border-primary hover:bg-primary hover:text-primary-foreground"
+          aria-label={`Open ${project.name} website`}
+          data-testid={`link-project-live-${project.id}`}
+        >
+          Online <ExternalLink size={11} />
+        </a>
+      )}
       <div className="absolute right-6 top-6 font-mono text-[10px] text-muted-foreground">
-        0{index + 1} / {project.category}
+        <span className={project.liveUrl ? "pr-24" : undefined}>
+          0{index + 1} / {project.category}
+        </span>
       </div>
       <div className="flex min-h-64 flex-col justify-between p-6 md:min-h-72 md:p-8">
         <div>
@@ -1247,6 +1262,21 @@ function ProjectModal({
             {project.architecture}
           </div>
         )}
+        {project.details && (
+          <div className="mt-8 border-t border-border pt-7">
+            <p className="font-mono text-[10px] uppercase tracking-[.14em] text-muted-foreground">
+              What I built
+            </p>
+            <ul className="mt-4 grid gap-3 text-sm leading-6 text-muted-foreground">
+              {project.details.map((detail) => (
+                <li key={detail} className="flex gap-3">
+                  <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
+                  <span>{detail}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <div className="mt-8 grid gap-6 border-t border-border pt-7 sm:grid-cols-2">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[.14em] text-muted-foreground">
@@ -1276,6 +1306,23 @@ function ProjectModal({
             ))}
           </div>
         </div>
+        {project.focus && (
+          <div className="mt-8 border-t border-border pt-7">
+            <p className="font-mono text-[10px] uppercase tracking-[.14em] text-muted-foreground">
+              Focus
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {project.focus.map((item) => (
+                <span
+                  key={item}
+                  className="rounded border border-primary/25 bg-primary/5 px-2.5 py-1.5 font-mono text-[11px] text-primary"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
         <div className="mt-8 flex flex-wrap gap-3 border-t border-border pt-7">
           <button
             onClick={() =>
